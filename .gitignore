@@ -1,0 +1,31 @@
+# ===== 压缩包 / 归档 =====
+*.7z
+*.zip
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+*.bz2
+*.xz
+*.zst
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== 编辑器 =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== 临时文件 =====
+temp/
+tmp/
+*.log
+
+# ===== 依赖目录（本项目为纯静态站点，通常不需要）=====
+node_modules/

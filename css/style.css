@@ -1,0 +1,246 @@
+/* ==========================================================================
+   OkraLinux 官网 — 自定义样式
+   说明：Tailwind 负责通用工具类；此文件仅承载 Tailwind 无法表达的效果
+        （渐变文字、玻璃质感、时间轴、粒子、终端等）。
+   ========================================================================== */
+
+/* ---------- 毛玻璃质感 ---------- */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.dark .glass {
+    background: rgba(17, 24, 39, 0.7);
+}
+
+/* ---------- 渐变文字 ---------- */
+.gradient-text {
+    background: linear-gradient(135deg, #16a34a 0%, #059669 50%, #0d9488 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.dark .gradient-text {
+    background: linear-gradient(135deg, #4ade80 0%, #34d399 50%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ---------- 首屏光晕背景 ---------- */
+.hero-gradient {
+    background: radial-gradient(ellipse at top, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(13, 148, 136, 0.1) 0%, transparent 50%);
+}
+.dark .hero-gradient {
+    background: radial-gradient(ellipse at top, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(13, 148, 136, 0.08) 0%, transparent 50%);
+}
+
+/* ---------- 返回顶部按钮 ---------- */
+#back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #16a34a, #0d9488);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    z-index: 40;
+}
+#back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+#back-to-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px -5px rgba(22, 163, 74, 0.6);
+}
+
+/* ---------- 时间轴（路线图） ---------- */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #22c55e, #0d9488);
+}
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+}
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.75rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+}
+
+/* 状态色自分支 */
+.timeline-item.in-progress::before {
+    background: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+    animation: okraPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.timeline-item.planned::before {
+    background: #9ca3af;
+    box-shadow: 0 0 0 4px rgba(156, 163, 175, 0.2);
+}
+
+@keyframes okraPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+}
+
+/* ---------- 首屏浮动粒子 ---------- */
+.particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(34, 197, 94, 0.5);
+    border-radius: 50%;
+    animation: particleFloat 15s linear infinite;
+}
+@keyframes particleFloat {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+}
+
+/* ---------- 滚动渐现 ---------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- 特性卡片：光带扫过 ---------- */
+.feature-card {
+    position: relative;
+    overflow: hidden;
+}
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+.feature-card:hover::before {
+    left: 100%;
+}
+
+/* ---------- 终端光标 ---------- */
+.terminal-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 18px;
+    background: #22c55e;
+    vertical-align: text-bottom;
+    animation: cursorBlink 1s step-end infinite;
+}
+@keyframes cursorBlink {
+    0%, 50%   { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ---------- 终端逐行淡入 ---------- */
+.term-line {
+    opacity: 0;
+    animation: lineIn 0.45s ease-out forwards;
+}
+@keyframes lineIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 可访问性：选区与键盘焦点 ---------- */
+::selection {
+    background: rgba(34, 197, 94, 0.28);
+}
+:focus-visible {
+    outline: 2px solid #16a34a;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ---------- 细滚动条 ---------- */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(120, 130, 140, 0.35);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.6);
+    background-clip: content-box;
+}
+
+/* ---------- 尊重系统「减弱动态效果」偏好 ---------- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .particles {
+        display: none !important;
+    }
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .term-line {
+        opacity: 1 !important;
+        animation: none !important;
+    }
+}

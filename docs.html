@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安装与使用文档 - OkraLinux</title>
+    <meta name="description" content="OkraLinux 自举流程、OAA 包安装、OkraPM / Lunar 包管理器使用文档。">
+    <meta name="theme-color" content="#16a34a">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322c55e'/%3E%3Cstop offset='1' stop-color='%230d9488'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='23' font-family='system-ui,sans-serif' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind.config.js"></script>
+    <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
+    <script src="js/theme-init.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
+
+    <!-- ===================== 导航栏 ===================== -->
+    <nav class="fixed w-full z-50 glass border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-okra-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">O</div>
+                    <span class="text-xl font-bold tracking-tight">OkraLinux</span>
+                    <span class="hidden sm:inline text-xs text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded px-1.5 py-0.5">文档</span>
+                </a>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-sm font-medium hover:text-okra-600 dark:hover:text-okra-400 transition-colors">首页</a>
+                    <a href="#bootstrap" class="text-sm font-medium hover:text-okra-600 dark:hover:text-okra-400 transition-colors">自举流程</a>
+                    <a href="#okrapm" class="text-sm font-medium hover:text-okra-600 dark:hover:text-okra-400 transition-colors">包管理</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="切换深色模式">
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block" aria-hidden="true"></i>
+                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden" aria-hidden="true"></i>
+                    </button>
+                    <a href="https://github.com/OkraLinux" target="_blank" rel="noopener" class="px-4 py-2 bg-okra-600 hover:bg-okra-700 text-white text-sm font-medium rounded-lg transition-all shadow-lg shadow-okra-500/30 flex items-center space-x-2">
+                        <i data-lucide="github" class="w-4 h-4" aria-hidden="true"></i>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center space-x-4">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="切换深色模式">
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block" aria-hidden="true"></i>
+                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden" aria-hidden="true"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-menu">
+                        <i data-lucide="menu" class="w-6 h-6" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-gray-200 dark:border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">首页</a>
+                <a href="#bootstrap" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">自举流程</a>
+                <a href="#okrapm" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">包管理</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== 正文布局 ===================== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+        <div class="lg:grid lg:grid-cols-[240px_1fr] lg:gap-12">
+
+            <!-- 侧边目录 -->
+            <aside class="docs-sidebar lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto mb-10 lg:mb-0">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 mb-3">目录</p>
+                <nav>
+                    <a href="#overview" class="toc-link">概览</a>
+                    <a href="#architecture" class="toc-link">架构与平台</a>
+
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 mt-5 mb-2">自举流程</p>
+                    <a href="#bootstrap" class="toc-link">工具链自举</a>
+                    <a href="#repo-map" class="toc-link sub">仓库地图</a>
+                    <a href="#install-order" class="toc-link sub">安装顺序</a>
+                    <a href="#bootstrap-steps" class="toc-link sub">操作步骤</a>
+                    <a href="#proot" class="toc-link sub">proot 环境</a>
+                    <a href="#verify" class="toc-link sub">安全校验</a>
+
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 mt-5 mb-2">包管理</p>
+                    <a href="#okrapm" class="toc-link">OkraPM / Lunar</a>
+                    <a href="#build" class="toc-link sub">从源码构建</a>
+                    <a href="#package-format" class="toc-link sub">包格式</a>
+                    <a href="#verify-install" class="toc-link sub">校验与安装</a>
+                    <a href="#uninstall" class="toc-link sub">卸载</a>
+                    <a href="#transaction" class="toc-link sub">事务与回滚</a>
+                    <a href="#repo-manage" class="toc-link sub">仓库管理</a>
+                    <a href="#upgrade" class="toc-link sub">更新与升级</a>
+                    <a href="#oaa-tools" class="toc-link sub">OAA 工具命令</a>
+                    <a href="#data-dir" class="toc-link sub">数据目录</a>
+                </nav>
+            </aside>
+
+            <!-- 文档正文 -->
+            <main class="doc-body min-w-0">
+
+                <header class="mb-12">
+                    <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-50 mb-3">安装与使用文档</h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">从空白系统到可自我演进的发行版，完整记录 OkraLinux 的自举流程与包管理用法。</p>
+                </header>
+
+                <!-- ---------- 概览 ---------- -->
+                <section id="overview">
+                    <h2>概览</h2>
+                    <p>OkraLinux 是一个面向现代硬件和 LiveCD 场景的 Linux 操作系统项目。我们将内核、用户态包管理器和系统镜像构建拆分为独立项目，以保持清晰的依赖关系和可维护的开发边界。</p>
+                    <p>本文档给出一条从空白系统逐步自举、最终可自我演进的完整路径。</p>
+                    <p>整个项目由三部分组成：</p>
+                    <ul>
+                        <li><strong><a href="https://github.com/OkraLinux/KERNEL" target="_blank" rel="noopener">KERNEL</a></strong>——基于 Linux 7.2，负责内核本身、OkraPM 内核接口和真正的内核模块、LiveCD 所需的内核配置，以及内核构建和启动相关能力。</li>
+                        <li><strong><a href="https://github.com/OkraLinux/okrapm" target="_blank" rel="noopener">okrapm</a></strong>——负责用户态软件包管理能力，包含 Lunar 包管理器、OAA 包格式和工具、OPSIS 安装脚本，以及仓库同步、解析和事务管理。</li>
+                        <li><strong>okra-linux</strong>（仓库尚未公开）——负责系统集成和发行介质，包含 rootfs 构建脚本、系统配置和 systemd 服务、LiveCD 与安装镜像生成，以及软件包清单和发行版默认内容。</li>
+                    </ul>
+
+                    <div class="callout callout-info">
+                        <i data-lucide="info" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>关于 OAA</strong>
+                            OAA 即 <em>Okra Application Artifact</em>，是基于 tar 归档的应用包格式。此外还有传统的 <code>.okra</code> 包格式，两者可通过相同入口安装。
+                        </div>
+                    </div>
+
+                    <div class="callout callout-info">
+                        <i data-lucide="package" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>关于自举工具包</strong>
+                            <a href="https://github.com/OkraLinux/bootstrap-toolkit" target="_blank" rel="noopener">bootstrap-toolkit</a> 是自举体系的总入口，收录包管理工具链、构建脚本与基础 OAA 软件包，用于在 aarch64 环境把一个空白系统逐步拉起为可自我演进的发行版。
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ---------- 架构与平台 ---------- -->
+                <section id="architecture">
+                    <h2>架构与平台</h2>
+                    <p>组织公开资料中，自举工具包的定位是<strong>在 aarch64 环境</strong>把一个空白系统逐步拉起为可自我演进的发行版。当前 GitHub 上公开发布的基础 OAA 包，其仓库描述均标注为 aarch64。</p>
+
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>架构</th>
+                                <th>典型平台</th>
+                                <th>公开 OAA 包</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>aarch64</code></td>
+                                <td>ARM 服务器、单板计算机</td>
+                                <td>已发布</td>
+                            </tr>
+                            <tr>
+                                <td><code>x86_64</code></td>
+                                <td>Intel / AMD 桌面与服务器</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout callout-warn">
+                        <i data-lucide="triangle-alert" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>安装前请确认架构</strong>
+                            请以对应仓库 Release 页面实际提供的附件为准。若目标架构暂无构建产物，该包无法直接安装。
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ---------- 自举流程 ---------- -->
+                <section id="bootstrap">
+                    <h2>自举流程</h2>
+                    <p><a href="https://github.com/OkraLinux/bootstrap-toolkit" target="_blank" rel="noopener">bootstrap-toolkit</a> 仓库是 OkraLinux 自举体系的总入口，用于在一个空白系统上，逐步把发行版拉起为可自我演进的状态。</p>
+
+                    <h3 id="repo-map">仓库地图</h3>
+                    <p>各组件的最新版本与职责如下：</p>
+
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>组件</th>
+                                <th>版本</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/glibc" target="_blank" rel="noopener">glibc</a></td>
+                                <td>2.43</td>
+                                <td>系统基座，所有动态程序都依赖它，<strong>必须最先安装</strong></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/gcc" target="_blank" rel="noopener">gcc</a></td>
+                                <td>16.2.0 r2</td>
+                                <td>自托管编译器，使用 OkraLinux glibc 构建，已完成自举闭环</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/bootstrap-toolkit/tree/main/oaa" target="_blank" rel="noopener">make</a></td>
+                                <td>4.4.1</td>
+                                <td>构建工具，位于自举仓库的 <code>oaa</code> 目录内，无独立仓库</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/coreutils" target="_blank" rel="noopener">coreutils</a></td>
+                                <td>9.6</td>
+                                <td>一百零六个基础命令，文件与文本操作</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/bash" target="_blank" rel="noopener">bash</a></td>
+                                <td>5.2.37</td>
+                                <td>系统默认 shell</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/KERNEL" target="_blank" rel="noopener">KERNEL</a></td>
+                                <td>Linux 7.2</td>
+                                <td>Linux 内核、OkraPM 内核接口和真正的内核模块、LiveCD 所需的内核配置</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/okrapm" target="_blank" rel="noopener">okrapm</a></td>
+                                <td>—</td>
+                                <td>Lunar 包管理器、OAA 包格式和工具、OPSIS 安装脚本、仓库同步和事务管理</td>
+                            </tr>
+                            <tr>
+                                <td>okra-linux</td>
+                                <td>—</td>
+                                <td>rootfs 构建、系统配置、systemd 服务、LiveCD/安装镜像生成和软件包清单</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 id="install-order">依赖顺序与构建顺序</h3>
+                    <ul>
+                        <li><strong>安装顺序</strong>：glibc 优先，其次 gcc；之后的 make、bash、coreutils 可任意顺序安装。</li>
+                        <li><strong>构建顺序</strong>：若要从零重新编译，全部按上述顺序执行。每个 OAA 仓库内的 <code>scripts</code> 目录含对应构建脚本。</li>
+                    </ul>
+
+                    <h3 id="bootstrap-steps">操作步骤</h3>
+                    <ol class="step-list">
+                        <li>
+                            <strong>在目标系统安装工具链</strong>
+                            <p>将 <code>tools</code> 目录内的文件复制到 <code>/usr/bin</code> 与 <code>/usr/lib/okrapm</code>，并赋予执行权限。</p>
+                        </li>
+                        <li>
+                            <strong>下载所需 OAA 包</strong>
+                            <p>从各仓库的 Release 页面下载对应的 OAA 包。</p>
+                        </li>
+                        <li>
+                            <strong>依次安装基础组件</strong>
+                            <p>glibc 先行，然后安装 gcc、make、bash、coreutils。</p>
+                        </li>
+                        <li>
+                            <strong>验证安装结果</strong>
+                            <p>以下命令均应正常输出版本信息：</p>
+                            <div class="code-block">
+                                <div class="code-head"><span class="code-lang">bash</span></div>
+                                <pre><code>gcc --version
+make --version
+bash --version
+ls</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>验证自举能力</strong>
+                            <p>用安装好的 gcc 与 make 重新编译 GCC 自身源码。若能成功，即证明系统已具备自托管能力。详细命令见仓库的 <code>docs</code> 目录。</p>
+                        </li>
+                    </ol>
+
+                    <h3 id="proot">proot 环境注意事项</h3>
+                    <div class="callout callout-warn">
+                        <i data-lucide="triangle-alert" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>硬链接显示异常属正常现象</strong>
+                            在 proot 容器内构建时，硬链接会显示为以 <code>.l2s</code> 开头的特殊链接文件。所有构建脚本已内置清理逻辑，直接运行即可，无需手动干预。
+                        </div>
+                    </div>
+
+                    <h3 id="verify">安全校验</h3>
+                    <p>所有 Release 附件均附带 <code>sha256</code> 校验文件。<strong>下载后务必执行校验</strong>：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>sha256sum -c package.oaa.sha256</code></pre>
+                    </div>
+                </section>
+
+                <!-- ---------- 包管理 ---------- -->
+                <section id="okrapm">
+                    <h2>OkraPM / Lunar</h2>
+                    <p>OkraPM 是 Okra Rolling Linux 的用户态软件包管理工具链，提供三个部分：</p>
+                    <ul>
+                        <li><code>lunar</code>：依赖解析、事务安装、软件仓库同步和系统升级。</li>
+                        <li><code>oaa</code>：OAA 包的构建、校验和安装入口。</li>
+                        <li><code>.oaa</code>、<code>.okra</code>：基于 tar 归档的应用包和传统 Okra 包格式。</li>
+                    </ul>
+
+                    <h3 id="build">从源码构建</h3>
+                    <p>依赖 CMake 3.16 或更高版本、C++17 编译器，以及系统 <code>tar</code> 工具。</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>cmake -S . -B build
+cmake --build build -j2
+ctest --test-dir build --output-on-failure</code></pre>
+                    </div>
+                    <p>构建完成后，Lunar 可执行文件位于 <code>build/src/lunar/lunar</code>。</p>
+                    <p>OAA Shell 工具不需要编译，可直接从 <code>oaatools/oaatools</code> 使用，或安装到系统：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>make -C oaatools
+sudo make -C oaatools install</code></pre>
+                    </div>
+                    <p>安装后提供 <code>oaa</code> 命令，并将工具安装到 <code>/usr/bin</code> 和 <code>/usr/lib/okrapm</code>。</p>
+
+                    <h3 id="package-format">OAA 包格式</h3>
+                    <p>OAA 包通常使用以下目录布局：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">text</span></div>
+                        <pre><code>package/
+├── meta.yaml
+├── rootfs/
+│   ├── usr/bin/
+│   └── etc/
+└── scripts/
+    ├── pre-install
+    └── post-install</code></pre>
+                    </div>
+
+                    <h3 id="verify-install">校验与安装</h3>
+                    <p>校验 OAA 包：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>oaa verify package.oaa</code></pre>
+                    </div>
+                    <p>校验内容包含三项：</p>
+                    <ol>
+                        <li><code>.sha256</code> sidecar 文件（如果存在）；</li>
+                        <li><code>meta.yaml</code> 中的 <code>checksum</code> 字段（如果存在）；</li>
+                        <li>tar 归档是否可以正常读取。</li>
+                    </ol>
+                    <p>也可以使用 Lunar 执行同样的校验：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar verify package.oaa</code></pre>
+                    </div>
+
+                    <p>安装本地包：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>oaa install package.oaa</code></pre>
+                    </div>
+                    <div class="callout callout-safe">
+                        <i data-lucide="shield-check" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>冲突保护</strong>
+                            本地包安装会执行 SHA256 校验，并检查 payload 中的文件是否已存在。检测到文件冲突时安装会失败，<strong>不会覆盖已有文件</strong>。
+                        </div>
+                    </div>
+
+                    <p>传统 <code>.okra</code> 包也可以通过相同入口安装：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar install package.okra</code></pre>
+                    </div>
+
+                    <p>非 root 环境下，安装文件默认写入 Lunar 数据目录的 <code>rootfs/</code> 子目录。可使用环境变量指定安装根目录：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>LUNAR_INSTALL_ROOT=/tmp/rootfs lunar install package.oaa</code></pre>
+                    </div>
+
+                    <h3 id="uninstall">卸载</h3>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>oaa remove package-name
+lunar remove package-name</code></pre>
+                    </div>
+                    <p>卸载操作会更新 Lunar 系统状态。若安装事务失败，已写入的本地文件会被删除，系统状态也不会提交。</p>
+
+                    <h3 id="transaction">事务与回滚</h3>
+                    <p>Lunar 会从本地或远程仓库解析依赖，并按依赖顺序生成事务计划。安装、删除和升级都会经过事务提交；<strong>提交前自动创建系统快照</strong>。</p>
+
+                    <p>预览事务而不执行：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar plan install package-name
+lunar plan remove package-name
+lunar plan update</code></pre>
+                    </div>
+
+                    <p>查看已安装软件：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar list
+lunar status
+lunar info package-name</code></pre>
+                    </div>
+
+                    <p>管理快照：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar snapshot list
+lunar snapshot create "before upgrade"
+lunar rollback &lt;snapshot-id&gt;</code></pre>
+                    </div>
+
+                    <h3 id="repo-manage">软件仓库</h3>
+                    <p>同步所有已配置仓库：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar sync</code></pre>
+                    </div>
+
+                    <p>仓库管理：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar repo list
+lunar repo add &lt;name&gt; &lt;url&gt;
+lunar repo enable &lt;name&gt;
+lunar repo disable &lt;name&gt;
+lunar repo remove &lt;name&gt;</code></pre>
+                    </div>
+                    <p>本地仓库和远程仓库都由 Lunar 管理。远程仓库同步后，包元数据即可用于搜索、依赖解析和安装。</p>
+
+                    <h3 id="upgrade">更新与系统升级</h3>
+                    <p>滚动更新已安装软件：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar update</code></pre>
+                    </div>
+
+                    <p>升级指定软件：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar update package-name</code></pre>
+                    </div>
+
+                    <p>系统基线升级命令为：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar upgradle okra.systemversion</code></pre>
+                    </div>
+                    <div class="callout callout-warn">
+                        <i data-lucide="triangle-alert" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>注意命令拼写</strong>
+                            <code>upgrade</code> 是常见的使用习惯写法；当前的正式命令名为 <code>upgradle</code>。
+                        </div>
+                    </div>
+
+                    <h3 id="oaa-tools">OAA 工具命令</h3>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>oaa new &lt;directory&gt;
+oaa build &lt;directory&gt; -o package.oaa
+oaa inspect package.oaa
+oaa list package.oaa
+oaa extract package.oaa &lt;destination&gt;
+oaa sha256 package.oaa
+oaa verify package.oaa</code></pre>
+                    </div>
+
+                    <p>使用 <code>oaa install</code> 和 <code>oaa remove</code> 时，工具默认查找 <code>lunar</code>。如果 Lunar 不在 <code>PATH</code> 中，可以指定路径：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>LUNAR_BIN=/path/to/lunar oaa install package.oaa</code></pre>
+                    </div>
+
+                    <h3 id="data-dir">数据目录</h3>
+                    <p>默认 Lunar 数据目录为 <code>/var/lib/lunar</code>。开发和测试时可使用：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>LUNAR_DATA_DIR=/tmp/lunar lunar list</code></pre>
+                    </div>
+
+                    <p>也可以通过命令行指定：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>lunar --root /tmp/lunar status</code></pre>
+                    </div>
+
+                    <p>数据目录主要包含：</p>
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>路径</th>
+                                <th>用途</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>system.db</code></td>
+                                <td>已安装对象和系统状态</td>
+                            </tr>
+                            <tr>
+                                <td><code>repos/</code></td>
+                                <td>本地仓库数据</td>
+                            </tr>
+                            <tr>
+                                <td><code>cache/downloads/</code></td>
+                                <td>下载缓存</td>
+                            </tr>
+                            <tr>
+                                <td><code>snapshots/</code></td>
+                                <td>系统快照</td>
+                            </tr>
+                            <tr>
+                                <td><code>rootfs/</code></td>
+                                <td>非 root 环境下的本地安装根目录</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>相关组件</h3>
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>组件</th>
+                                <th>路径</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>C++ 核心库</td>
+                                <td><code>lib/okrapmlib/</code></td>
+                            </tr>
+                            <tr>
+                                <td>Lunar CLI</td>
+                                <td><code>src/lunar/</code></td>
+                            </tr>
+                            <tr>
+                                <td>OAA 工具链</td>
+                                <td><code>oaatools/</code></td>
+                            </tr>
+                            <tr>
+                                <td>综合测试</td>
+                                <td><code>tests/test_all.cpp</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- ---------- 页尾导航 ---------- -->
+                <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-4 justify-between">
+                    <a href="index.html" class="group flex items-center space-x-2 text-okra-600 dark:text-okra-400 font-medium">
+                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true"></i>
+                        <span>返回首页</span>
+                    </a>
+                    <a href="https://github.com/OkraLinux/bootstrap-toolkit" target="_blank" rel="noopener" class="group flex items-center space-x-2 text-okra-600 dark:text-okra-400 font-medium">
+                        <span>查看自举仓库</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ===================== 页脚 ===================== -->
+    <footer class="bg-gray-900 dark:bg-gray-950 border-t border-gray-800 py-12 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-8 h-8 bg-gradient-to-br from-okra-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold">O</div>
+                    <span class="text-lg font-bold text-white">OkraLinux</span>
+                </div>
+                <p class="text-gray-500 text-sm">&copy; 2026 OkraLinux Organization. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部 -->
+    <button id="back-to-top" aria-label="回到顶部">
+        <i data-lucide="arrow-up" class="w-5 h-5" aria-hidden="true"></i>
+    </button>
+
+    <script src="js/main.js" defer></script>
+    <script src="js/docs.js" defer></script>
+</body>
+</html>

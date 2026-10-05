@@ -117,12 +117,12 @@
                     <div class="text-okra-100 text-sm md:text-base">块代码</div>
                 </div>
                 <div class="reveal">
-                    <div class="text-3xl md:text-4xl font-bold text-white mb-2 whitespace-nowrap">Linux 7.2</div>
-                    <div class="text-okra-100 text-sm md:text-base">内核基线</div>
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-2" data-count="2">0</div>
+                    <div class="text-okra-100 text-sm md:text-base">目标架构</div>
                 </div>
                 <div class="reveal">
-                    <div class="text-3xl md:text-4xl font-bold text-white mb-2" data-count="8">0</div>
-                    <div class="text-okra-100 text-sm md:text-base">基础软件包</div>
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-2 whitespace-nowrap">Linux 7.2</div>
+                    <div class="text-okra-100 text-sm md:text-base">内核基线</div>
                 </div>
                 <div class="reveal">
                     <div class="text-3xl md:text-4xl font-bold text-white mb-2 whitespace-nowrap">OAABI 1</div>
@@ -201,10 +201,11 @@
                             <span><strong class="text-gray-700 dark:text-gray-300">可重复构建</strong>：分阶段脚本与 Fedora CI 流水线</span>
                         </li>
                     </ul>
-                    <div class="mt-6 flex flex-wrap gap-4">
-                        <a href="https://github.com/OkraLinux/okra-linux" target="_blank" rel="noopener" class="text-okra-600 dark:text-okra-400 text-sm font-medium flex items-center hover:translate-x-1 transition-transform">
-                            查看仓库 <i data-lucide="chevron-right" class="w-4 h-4 ml-1" aria-hidden="true"></i>
-                        </a>
+                    <div class="mt-6 flex flex-wrap items-center gap-4">
+                        <span class="text-gray-400 dark:text-gray-500 text-sm flex items-center">
+                            <i data-lucide="clock" class="w-4 h-4 mr-1.5" aria-hidden="true"></i>
+                            仓库尚未公开
+                        </span>
                         <a href="docs.html#okralinux" class="text-okra-600 dark:text-okra-400 text-sm font-medium flex items-center hover:translate-x-1 transition-transform">
                             构建文档 <i data-lucide="chevron-right" class="w-4 h-4 ml-1" aria-hidden="true"></i>
                         </a>
@@ -361,86 +362,103 @@ lunar rollback &lt;id&gt;          # 回滚到快照</code></pre>
         </div>
     </section>
 
-    <!-- ===================== 基础软件包 ===================== -->
+    <!-- ===================== 软件包分发 ===================== -->
     <section id="repos" class="py-20 bg-gray-50 dark:bg-gray-950 transition-colors duration-300 reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">基础 OAA 软件包</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">各包已独立建仓，包含各自的构建脚本与 Release 产物。</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">软件包分发</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    基础软件包按架构分仓构建，构建产物统一发布在各自仓库的 Release 中。
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <a href="https://github.com/OkraLinux/glibc" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="database" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+                <a href="https://github.com/OkraLinux/oaa-packages" target="_blank" rel="noopener" class="feature-card group block p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-12 h-12 bg-gradient-to-br from-okra-500 to-teal-500 rounded-xl flex items-center justify-center">
+                            <i data-lucide="package" class="w-6 h-6 text-white" aria-hidden="true"></i>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
                     </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">glibc</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">GNU C Library 2.43-1</p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">oaa-packages</h3>
+                    <p class="text-sm text-okra-600 dark:text-okra-400 font-medium mb-4">aarch64 架构</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">OkraLinux OAA 基础软件包的构建产物，面向 aarch64 平台。</p>
                 </a>
 
-                <a href="https://github.com/OkraLinux/gcc" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="code-xml" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
+                <a href="https://github.com/OkraLinux/oaa-packages-x86" target="_blank" rel="noopener" class="feature-card group block p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center">
+                            <i data-lucide="cpu" class="w-6 h-6 text-white" aria-hidden="true"></i>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
                     </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">gcc</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">GCC 16.2.0-2</p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">oaa-packages-x86</h3>
+                    <p class="text-sm text-okra-600 dark:text-okra-400 font-medium mb-4">x86_64 架构</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">同一套配方的 x86_64 构建产物，与 aarch64 版本对应。</p>
                 </a>
+            </div>
 
-                <a href="https://github.com/OkraLinux/coreutils" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="terminal" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">coreutils</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">GNU Coreutils 9.6-1</p>
-                </a>
+            <div class="max-w-4xl mx-auto">
+                <div class="p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
+                        <i data-lucide="folder-tree" class="w-5 h-5 mr-2 text-okra-600 dark:text-okra-400" aria-hidden="true"></i>
+                        仓库结构
+                    </h3>
 
-                <a href="https://github.com/OkraLinux/bash" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="square-terminal" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">text</span></div>
+                        <pre><code>oaa-packages/
+├── packages/     配方，每个包一个 .conf
+├── scripts/      构建脚本
+└── out/          每个包一个文件夹，只放 sources 和 sha256</code></pre>
                     </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">bash</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">GNU Bash 5.2.37-2</p>
-                </a>
 
-                <a href="https://github.com/OkraLinux/ncurses" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="panels-top-left" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">ncurses</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">ncurses 6.5-2</p>
-                </a>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400 mt-6">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="w-4 h-4 text-okra-500 mt-0.5 mr-2 flex-shrink-0" aria-hidden="true"></i>
+                            <span><strong class="text-gray-700 dark:text-gray-300">包本体在 Release 里</strong>，tag 为 <code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-okra-700 dark:text-okra-300">packages</code>。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="w-4 h-4 text-okra-500 mt-0.5 mr-2 flex-shrink-0" aria-hidden="true"></i>
+                            <span><code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">packages</code> 是配方，<code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">scripts</code> 是构建脚本；加包只需在 <code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">packages</code> 里加一个 <code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">.conf</code>，脚本会自动收集。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="w-4 h-4 text-okra-500 mt-0.5 mr-2 flex-shrink-0" aria-hidden="true"></i>
+                            <span>依赖关系写在 <code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">.conf</code> 的 <code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">Dependencies</code> 里。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="w-4 h-4 text-okra-500 mt-0.5 mr-2 flex-shrink-0" aria-hidden="true"></i>
+                            <span>源码没有进仓库，<code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">sources</code> 里记的是地址和哈希。</span>
+                        </li>
+                    </ul>
 
-                <a href="https://github.com/OkraLinux/tar" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="archive" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
+                    <div class="mt-6 p-4 rounded-xl bg-okra-50 dark:bg-okra-900/20 border border-okra-100 dark:border-okra-900/40">
+                        <p class="text-sm text-gray-700 dark:text-gray-300 flex items-start">
+                            <i data-lucide="triangle-alert" class="w-4 h-4 text-okra-600 dark:text-okra-400 mt-0.5 mr-2 flex-shrink-0" aria-hidden="true"></i>
+                            <span><strong>架构隔离：</strong>构建必须在对应架构的 Linux 上运行。aarch64 包在 aarch64 上构建，x86_64 包在 x86_64 上构建。</span>
+                        </p>
                     </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">tar</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">GNU tar 1.35-1</p>
-                </a>
+                </div>
 
-                <a href="https://github.com/OkraLinux/gzip" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="file-archive" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
+                        <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center">
+                            <i data-lucide="repeat" class="w-4 h-4 mr-2 text-okra-600 dark:text-okra-400" aria-hidden="true"></i>
+                            自动构建
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">push 到 <code class="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800">main</code> 会触发全量构建，也可以在 Actions 里手动指定单个包。</p>
                     </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">gzip</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">GNU gzip 1.13-1</p>
-                </a>
-
-                <a href="https://github.com/OkraLinux/xz" target="_blank" rel="noopener" class="group block p-5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-okra-500 dark:hover:border-okra-500 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between mb-3">
-                        <i data-lucide="package-open" class="w-7 h-7 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
-                        <i data-lucide="external-link" class="w-4 h-4 text-gray-400 group-hover:text-okra-500 transition-colors" aria-hidden="true"></i>
+                    <div class="p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
+                        <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center">
+                            <i data-lucide="hammer" class="w-4 h-4 mr-2 text-okra-600 dark:text-okra-400" aria-hidden="true"></i>
+                            本地构建
+                        </h3>
+                        <div class="code-block">
+                            <div class="code-head"><span class="code-lang">bash</span></div>
+                            <pre><code>bash scripts/build-package.sh grep</code></pre>
+                        </div>
                     </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-1">xz</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">XZ Utils 5.6.2-1</p>
-                </a>
+                </div>
             </div>
         </div>
     </section>

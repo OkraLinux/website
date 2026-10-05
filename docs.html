@@ -100,6 +100,7 @@
                     <a href="#pm-oaa" class="toc-link sub">OAA 包</a>
                     <a href="#pm-opsis" class="toc-link sub">OPSIS</a>
                     <a href="#pm-repo" class="toc-link sub">本地软件源</a>
+                    <a href="#pm-dist" class="toc-link sub">软件包分发</a>
 
                     <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 px-3 mt-5 mb-2">OkraLinux</p>
                     <a href="#okralinux" class="toc-link">LiveCD 构建</a>
@@ -605,6 +606,64 @@ lunar sync okra
 lunar install GNU.gcc</code></pre>
                     </div>
                     <p><code>repo add</code> 可以多带一个类型参数。URL 以 <code>http://</code>、<code>https://</code> 或 <code>file://</code> 开头时默认是 <code>remote</code>，其他路径默认是 <code>local</code>。</p>
+
+                    <h3 id="pm-dist">软件包分发</h3>
+                    <p>基础软件包按架构分仓构建，构建产物统一发布在各自仓库的 Release 中，tag 为 <code>packages</code>。</p>
+
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>仓库</th>
+                                <th>架构</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/oaa-packages" target="_blank" rel="noopener">oaa-packages</a></td>
+                                <td><code>aarch64</code></td>
+                                <td>OkraLinux OAA 基础软件包的构建产物</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/OkraLinux/oaa-packages-x86" target="_blank" rel="noopener">oaa-packages-x86</a></td>
+                                <td><code>x86_64</code></td>
+                                <td>同一套配方的 x86_64 构建产物</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>仓库内部结构：</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">text</span></div>
+                        <pre><code>oaa-packages/
+├── packages/     配方，每个包一个 .conf
+├── scripts/      构建脚本
+└── out/          每个包一个文件夹，只放 sources 和 sha256</code></pre>
+                    </div>
+
+                    <ul>
+                        <li><code>packages</code> 是配方，<code>scripts</code> 是构建脚本。</li>
+                        <li>加包只需在 <code>packages</code> 里加一个 <code>.conf</code>，脚本会自动收集。</li>
+                        <li>依赖关系写在 <code>.conf</code> 的 <code>Dependencies</code> 里。</li>
+                        <li>源码没有进仓库，<code>sources</code> 里记的是地址和哈希。</li>
+                        <li>包本体在 Release 里，tag 是 <code>packages</code>。</li>
+                    </ul>
+
+                    <p>包文件名格式为 <code>&lt;名称&gt;-&lt;版本&gt;-1.&lt;架构&gt;.oaa</code>，例如 <code>gcc-16.2.0-1.x86_64.oaa</code>。</p>
+
+                    <p>构建：push 到 <code>main</code> 会触发全量构建，也可以在 Actions 里手动指定单个包。</p>
+                    <div class="code-block">
+                        <div class="code-head"><span class="code-lang">bash</span></div>
+                        <pre><code>bash scripts/build-package.sh grep</code></pre>
+                    </div>
+
+                    <div class="callout callout-warn">
+                        <i data-lucide="triangle-alert" class="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <strong>架构隔离</strong>
+                            构建必须在对应架构的 Linux 上运行：aarch64 包在 aarch64 上构建，x86_64 包在 x86_64 上构建。
+                        </div>
+                    </div>
                 </section>
 
                 <!-- ==================== OkraLinux ==================== -->

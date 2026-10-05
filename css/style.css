@@ -192,6 +192,127 @@
     to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ---------- 代码块 ----------
+   说明：两页共用。窄屏必须能横向滚动，否则 pre 内的长行会把整页撑破。 */
+.code-block {
+    position: relative;
+    margin-bottom: 1.25rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: #111827;
+    border: 1px solid #1f2937;
+    max-width: 100%;
+}
+.code-block .code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    background: #1f2937;
+    border-bottom: 1px solid #374151;
+}
+.code-block .code-lang {
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.code-block pre {
+    margin: 0;
+    padding: 1rem 1.125rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    max-width: 100%;
+}
+.code-block pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    /* 关键：禁止软换行，改为容器内横向滚动 */
+    white-space: pre;
+    display: block;
+    width: max-content;
+    min-width: 100%;
+}
+
+/* ---------- 行内代码：窄屏允许断行 ---------- */
+.doc-body :not(pre) > code,
+code:not(pre code) {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- 极窄竖屏（≤400px）适配 ---------- */
+@media (max-width: 400px) {
+    /* 标题与正文收紧 */
+    .doc-body h2 {
+        font-size: 1.4rem;
+    }
+    .doc-body h3 {
+        font-size: 1.1rem;
+    }
+    /* 表格在窄屏横向滚动，避免挤压变形 */
+    .doc-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+    /* 代码块内边距与字号再收一档 */
+    .code-block pre {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.75rem;
+    }
+    .code-block .code-head {
+        padding: 0.375rem 0.75rem;
+    }
+    /* 终端演示区同步收紧 */
+    .terminal-cursor {
+        width: 6px;
+        height: 14px;
+    }
+    /* 返回顶部按钮避让 */
+    #back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    /* 步骤条序号缩窄 */
+    .step-list > li {
+        padding-left: 2.5rem;
+    }
+    .step-list > li::before {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.75rem;
+    }
+    .step-list > li:not(:last-child)::after {
+        left: 0.8125rem;
+        top: 2rem;
+    }
+}
+
+/* ---------- 全局兜底：防止任何元素撑破视口 ---------- */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+img, svg, video, canvas, iframe {
+    max-width: 100%;
+    height: auto;
+}
+pre, table {
+    max-width: 100%;
+}
+
 /* ---------- 可访问性：选区与键盘焦点 ---------- */
 ::selection {
     background: rgba(34, 197, 94, 0.28);

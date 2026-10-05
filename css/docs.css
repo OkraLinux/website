@@ -140,48 +140,8 @@
     color: #f9a8d4;
 }
 
-/* ---------- 代码块 ---------- */
-.code-block {
-    position: relative;
-    margin-bottom: 1.25rem;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    background: #111827;
-    border: 1px solid #1f2937;
-}
-
-.code-block .code-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 0.875rem;
-    background: #1f2937;
-    border-bottom: 1px solid #374151;
-}
-
-.code-block .code-lang {
-    font-size: 0.6875rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #9ca3af;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-.code-block pre {
-    margin: 0;
-    padding: 1rem 1.125rem;
-    overflow-x: auto;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: #e5e7eb;
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-}
-.code-block pre code {
-    background: none;
-    padding: 0;
-    color: inherit;
-    font-size: inherit;
-}
+/* ---------- 代码块 ----------
+   基础样式统一在 style.css（两页共用），此处不再重复定义。 */
 
 /* 复制按钮 */
 .copy-btn {
@@ -191,6 +151,8 @@
     border-radius: 0.25rem;
     transition: color 0.2s ease, background-color 0.2s ease;
     cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .copy-btn:hover {
     color: #fff;
